@@ -134,6 +134,7 @@ class App(CTk):
     def prompt_upload(self):
         paths  = askopenfilenames(filetypes=[(".pdf", 'PDF')], defaultextension='.pdf')
         for path in paths:
+            self.append_message("Uploaded: "+path.split('/')[-1], True)
             docs = load_pdf_data(file_path=path)
             self.documents += split_docs(documents=docs)
         self.vectorstore = create_embeddings(self.documents, self.embed)

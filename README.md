@@ -36,8 +36,8 @@ Before running the project, ensure you have the following:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-repo-name/chatgpt-pdf-assistant.git
-   cd chatgpt-pdf-assistant
+   git clone https://github.com/aurogenic/Adept
+   cd Adept
    ```
 
 2. **Set up Python Environment:**
