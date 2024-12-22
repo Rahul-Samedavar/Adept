@@ -4,6 +4,8 @@ from tkinter.filedialog import askopenfilenames
 from tkinter.messagebox import showerror
 
 from util import *
+from time import time
+
 
 from langchain.llms import Ollama
 from langchain import PromptTemplate
@@ -41,8 +43,6 @@ class ModelSelector(CTkToplevel):
                       ).pack( fill="x", pady=3, padx=7, ipady=2)
             
 
-      
-
 class App(CTk):
     def __init__(self, *args, **kwargs): 
         super().__init__(*args, fg_color = L1,  **kwargs)
@@ -69,7 +69,7 @@ class App(CTk):
             height=50, width=110, corner_radius=10, text_color=D1, fg_color=L1, hover_color="#FFD700"
             ).grid(row=0, column=2, sticky="EW", pady=10)
         
-        CTkButton(navbar, text="Delete Chat", font=("Roboto bold", 20), command=self.delete_chat,
+        CTkButton(navbar, text="Clear Chat", font=("Roboto bold", 20), command=self.clear_chat,
             height=50, width=110, corner_radius=10, text_color=D1, fg_color=L1, hover_color="#DA0B58"
             ).grid(row=0, column=3, sticky="EW", pady=10, padx=10)
 
@@ -105,10 +105,14 @@ class App(CTk):
 
 
     def new_chat(self):
-        print("New chat")
-
-    def delete_chat(self):
-        print("Delete chat")
+        self.chained = False;
+        self.chain = None;
+        self.documents = [];
+        self.clear_chat();
+    
+    def clear_chat(self):
+        for widget in self.chats_container.slaves():
+            widget.destroy()
 
     def prompt_change_model(self):
         if not self.chained:
@@ -126,10 +130,12 @@ class App(CTk):
                 self.loadinig = True
                 self.append_message(query, True);
                 response = get_response(query, self.chain);
+                self.append_message(response, False);
+            self.inp.delete(1.0, END);
+            self.loading = False;
+            self.after(1, self.chats_container._parent_canvas.yview_moveto, 1.0)
 
-                self.append_message(response, False)
-            self.inp.delete(1.0, END)
-            self.loading = False
+        
 
     def prompt_upload(self):
         paths  = askopenfilenames(filetypes=[(".pdf", 'PDF')], defaultextension='.pdf')
@@ -149,7 +155,6 @@ class App(CTk):
         else:
             CTkLabel(self.chats_container, text=message, fg_color=  D2, corner_radius=10, text_color=L1, font=("Roboto", 18), justify="left"
             ).pack(side="top", anchor= "w", padx=5, pady=2, ipadx=10, ipady=10)
-
 
     def init_setup(self):
         self.loading = True
@@ -179,11 +184,6 @@ class App(CTk):
 
     def callback_for_enter(self, event):
         self.send()
-    
-    
-
- 
-
 
 
 
