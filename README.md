@@ -36,7 +36,7 @@ Before running the project, ensure you have the following:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/aurogenic/Adept
+   git clone https://github.com/Rahul-Samedavar/Adept.git
    cd Adept
    ```
 
