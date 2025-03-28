@@ -1,6 +1,6 @@
 # ChatGPT-Powered PDF Assistant
 
-This project provides a user-friendly PDF assistant powered by a conversational AI model. Users can upload PDFs, query them, and receive answers in an intuitive GUI built with `customtkinter`.
+This project provides a user-friendly Document (PDF, Doc and text file) assistant powered by a conversational AI model. Users can upload documents, query them, and receive answers in an intuitive GUI built with `customtkinter`.
 
 ---
 
@@ -8,7 +8,7 @@ This project provides a user-friendly PDF assistant powered by a conversational 
 
 - **Chat Interface:** Interact with your PDF data through a simple and **retro themed** GUI.
 - **Customizable Models:** Choose from a list of conversational AI models.
-- **PDF Upload Support:** Upload multiple PDFs to extract and query data.
+- **Document Upload Support:** Upload multiple documents to extract and query data.
 - **Embeddings Support:** Leverages advanced embedding models for enhanced question-answering capabilities.
 - **Easy Navigation:** Scrollable chat history for reference.
 

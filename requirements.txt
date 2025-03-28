@@ -1,7 +1,11 @@
 customtkinter
 pillow
-langchain
-pymupdf
 huggingface-hub
 faiss-cpu
 sentence-transformers
+langchain
+langchain-community
+langchain_huggingface
+langchain_ollama
+pymupdf
+docx2txt

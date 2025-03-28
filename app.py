@@ -4,11 +4,9 @@ from tkinter.filedialog import askopenfilenames
 from tkinter.messagebox import showerror
 
 from util import *
-from time import time
 
-
-from langchain.llms import Ollama
-from langchain import PromptTemplate
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import PromptTemplate
 
 D1 = '#2E073F'
 D2 = '#7A1CAC'
@@ -138,10 +136,10 @@ class App(CTk):
         
 
     def prompt_upload(self):
-        paths  = askopenfilenames(filetypes=[(".pdf", 'PDF')], defaultextension='.pdf')
+        paths  = askopenfilenames(filetypes=[(".pdf", 'PDF'), ('.txt', 'Text'), ('.docx', "Document")], defaultextension='.pdf')
         for path in paths:
             self.append_message("Uploaded: "+path.split('/')[-1], True)
-            docs = load_pdf_data(file_path=path)
+            docs = load_data(file_path=path)
             self.documents += split_docs(documents=docs)
         self.vectorstore = create_embeddings(self.documents, self.embed)
         self.retriever = self.vectorstore.as_retriever()
@@ -167,14 +165,14 @@ class App(CTk):
             showerror("No models", "No models found")
             self.destroy();
         self.model_name = "mistral:latest"
-        self.llm = Ollama(model=self.model_name, temperature=0)
+        self.llm = OllamaLLM(model=self.model_name, temperature=0)
         self.chain = None;
         self.loading = False
 
     def set_model(self, model_name):
         self.loading =True
         try:
-            self.llm = Ollama(model=model_name, temperature=0)
+            self.llm = OllamaLLM(model=model_name, temperature=0)
             self.chain = load_qa_chain(self.retriever, self.llm, self.prompt)
             self.model_name = model_name
             print("current model: ", self.model_name)

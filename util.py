@@ -1,7 +1,7 @@
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.document_loaders import PyMuPDFLoader
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.document_loaders import PyMuPDFLoader, TextLoader, Docx2txtLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 import textwrap
 import subprocess
@@ -10,6 +10,24 @@ import subprocess
 def load_pdf_data(file_path):
     loader = PyMuPDFLoader(file_path=file_path)
     return loader.load()
+
+def load_text_data(file_path):
+    loader = TextLoader(file_path)
+    return loader.load()
+
+def load_doc_data(file_path):
+    loader = Docx2txtLoader(file_path)
+    return loader.load()
+
+def load_data(file_path):
+    if file_path.endswith(".pdf"):
+        return load_pdf_data(file_path)
+    elif file_path.endswith(".txt"):
+        return load_text_data(file_path)
+    elif file_path.endswith(".docx"):
+        return load_doc_data(file_path)
+    else:
+        raise ValueError("Unsupported file format")
 
 def split_docs(documents, chunk_size=1000, chunk_overlap=20):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
